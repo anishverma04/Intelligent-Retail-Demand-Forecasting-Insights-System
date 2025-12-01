@@ -5,10 +5,10 @@ Project Overview Build a system that:  Forecasts product demand using deep learn
 ## 🎯 Project Overview
 
 This project demonstrates end-to-end ML development for a Retail-Demand-Forecasting-Insights-System, covering:
-- Deep learning with **PyTorch** and **TensorFlow**
-- **LLM fine-tuning** and deployment
-- Production **API deployment**
-- Model evaluation and **MLOps**
+- Deep learning with PyTorch and TensorFlow
+- LLM fine-tuning and deployment
+- Production API deployment
+- Model evaluation and MLOps
 
 ---
 
@@ -36,7 +36,7 @@ docker --version
 
 ## 🚀 Implementation Steps
 
-### **Phase 1: Data Preparation
+### Phase 1: Data Preparation
 
 #### Step 1: Generate or Acquire Dataset
 ```bash
@@ -71,7 +71,7 @@ plt.title('Average Sales by Day of Week')
 plt.show()
 ```
 
-**Key Questions to Answer:**
+Key Questions to Answer:
 - What's the average daily demand?
 - Are there weekly/monthly patterns?
 - Which products have high volatility?
@@ -79,11 +79,11 @@ plt.show()
 
 ---
 
-### **Phase 2: PyTorch Implementation
+### Phase 2: PyTorch Implementation
 
 #### Step 3: Understanding the Architecture
 
-**LSTM Model Design:**
+LSTM Model Design:
 ```
 Input: (batch_size, 14, 7)  # 14 days, 7 features
   ↓
@@ -98,7 +98,7 @@ Fully Connected: 32 units
 Output: (batch_size, 7)  # 7-day forecast
 ```
 
-**Why LSTM?**
+Why LSTM?
 - Captures temporal dependencies
 - Handles variable-length sequences
 - Remembers long-term patterns
@@ -118,7 +118,7 @@ python pytorch_demand_forecast.py
 # - Final MAPE < 15% (good performance)
 ```
 
-**Training Loop Explanation:**
+Training Loop Explanation:
 ```python
 # What happens in each epoch:
 for epoch in range(num_epochs):
@@ -138,11 +138,11 @@ for epoch in range(num_epochs):
     optimizer.zero_grad()
 ```
 
-**Optimization Techniques Used:**
-1. **Adam Optimizer**: Adaptive learning rates
-2. **Gradient Clipping**: Prevents exploding gradients
-3. **Dropout**: Prevents overfitting
-4. **Learning Rate Scheduling**: Reduces LR when stuck
+Optimization Techniques Used:
+1. Adam Optimizer: Adaptive learning rates
+2. Gradient Clipping: Prevents exploding gradients
+3. Dropout: Prevents overfitting
+4. Learning Rate Scheduling: Reduces LR when stuck
 
 #### Step 5: Experiment with Hyperparameters
 ```python
@@ -155,14 +155,14 @@ experiments = [
 
 # Track results
 for config in experiments:
-    model = LSTMDemandForecaster(**config)
+    model = LSTMDemandForecaster(config)
     # ... train and evaluate
     # Log: config, final_loss, MAPE
 ```
 
 ---
 
-### **Phase 3: TensorFlow Implementation 
+### Phase 3: TensorFlow Implementation 
 
 #### Step 6: TensorFlow Training
 ```bash
@@ -172,12 +172,12 @@ python tensorflow_demand_forecast.py
 tensorboard --logdir=./logs
 ```
 
-**Key Differences from PyTorch:**
-- **Keras API**: Higher-level, more abstractions
-- **Callbacks**: Built-in training controls
-- **SavedModel format**: Production-ready serialization
+Key Differences from PyTorch:
+- Keras API: Higher-level, more abstractions
+- Callbacks: Built-in training controls
+- SavedModel format: Production-ready serialization
 
-**Architecture Comparison:**
+Architecture Comparison:
 
 | Aspect | PyTorch | TensorFlow |
 |--------|---------|------------|
@@ -195,18 +195,18 @@ tensorboard --logdir=./logs
 # days 2 weeks ago for short-term forecasting
 ```
 
-**When to use Attention:**
+When to use Attention:
 - Long sequences (> 30 steps)
 - When recent data is more important
 - When you need interpretability
 
 ---
 
-### **Phase 4: LLM Integration 
+### Phase 4: LLM Integration 
 
 #### Step 8: Fine-tuning Strategy
 
-**LoRA (Low-Rank Adaptation):**
+LoRA (Low-Rank Adaptation):
 - Freezes base model weights
 - Adds small trainable matrices
 - Reduces memory by 90%
@@ -219,7 +219,7 @@ tensorboard --logdir=./logs
 # Only train B and A!
 ```
 
-**Training Data Format:**
+Training Data Format:
 ```json
 {
   "instruction": "Analyze demand pattern",
@@ -246,12 +246,12 @@ Focus on actionable insights for procurement team."""
 
 #### Step 10: RAG Implementation
 
-**Why RAG?**
+Why RAG?
 - LLMs have limited context
 - Need access to latest data
 - Combines retrieval + generation
 
-**RAG Pipeline:**
+RAG Pipeline:
 ```
 User Query
    ↓
@@ -268,11 +268,11 @@ LLM generates answer
 
 ---
 
-### **Phase 5: Model Evaluation
+### Phase 5: Model Evaluation
 
 #### Step 11: Comprehensive Metrics
 
-**Forecasting Metrics:**
+Forecasting Metrics:
 ```python
 # Point accuracy
 MAE = mean(|actual - predicted|)
@@ -287,7 +287,7 @@ correct_direction = (sign(actual[t] - actual[t-1]) ==
                      sign(pred[t] - pred[t-1]))
 ```
 
-**LLM Evaluation:**
+LLM Evaluation:
 ```python
 # Factual accuracy (ROUGE)
 rouge_score(generated, reference)
@@ -299,7 +299,7 @@ extract_numbers(generated) == expected_numbers
 perplexity = exp(cross_entropy_loss)
 ```
 
-**Business Metrics:**
+Business Metrics:
 ```python
 # Inventory costs
 holding_cost = sum(excess_inventory * unit_cost * 0.2)
@@ -311,7 +311,7 @@ in_stock_rate = days_in_stock / total_days
 
 ---
 
-### **Phase 6: Deployment
+### Phase 6: Deployment
 
 #### Step 12: API Development
 ```bash
@@ -329,17 +329,17 @@ curl -X POST "http://localhost:8000/forecast" \
   }'
 ```
 
-**Deployment Patterns:**
+Deployment Patterns:
 
-1. **Synchronous API** (Current)
+1. Synchronous API (Current)
    - Best for: Real-time predictions
    - Latency: < 1 second
 
-2. **Async/Background Jobs**
+2. Async/Background Jobs
    - Best for: Batch forecasts
    - Use Celery + Redis
 
-3. **Stream Processing**
+3. Stream Processing
    - Best for: Continuous updates
    - Use Kafka + Flink
 
