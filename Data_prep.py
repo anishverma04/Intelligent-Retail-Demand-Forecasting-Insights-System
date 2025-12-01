@@ -1,4 +1,4 @@
-# Create synthetic data first (or use Kaggle retail datasets)
+# Create synthetic data (or use Kaggle retail datasets)
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
